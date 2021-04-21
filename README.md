@@ -40,8 +40,8 @@ throwable: java.lang.RuntimeException: com.netflix.client.ClientException: Load 
 + `throwable` 日志异常栈信息 (如果有的话)
 
 ## 版本依赖
+* lombok 1.18.8
 * logback 1.2.3
-* aliyun-log-producer 0.3.8
 * protobuf 3.13.0
 * grpc-java 1.34.0
 * ok-http 2.5.0
