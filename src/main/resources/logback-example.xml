@@ -1,0 +1,45 @@
+<configuration>
+  <!-- %m输出的信息,%p日志级别,%t线程名,%d日期,%c类的全名,%i索引【从数字0开始递增】,,, -->
+  <!-- appender是configuration的子节点，是负责写日志的组件。 -->
+
+  <!-- ConsoleAppender：把日志输出到控制台 -->
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d %highlight(%-5level) | %boldYellow(%thread) |
+        %boldMagenta(%logger{20})(%file:%line\)- %m%n
+      </pattern>
+      <!-- 控制台也要使用UTF-8，不要使用GBK，否则会中文乱码 -->
+      <charset>UTF-8</charset>
+    </encoder>
+  </appender>
+
+  <!--为了防止进程退出时，内存中的数据丢失，请加上此选项-->
+  <shutdownHook class="ch.qos.logback.core.hook.DelayingShutdownHook"/>
+
+  <appender name="cls" class="com.sevlow.cls.logback.LoghubAppender">
+    <!--必选项-->
+    <!-- 账号及网络配置 -->
+    <region>ap-guangzhou</region>
+    <secretId>SECRET ID</secretId>
+    <secretKey>SECRET KEY</secretKey>
+    <topicId>CLS TOPIC</topicId>
+    <!--必选项 (end)-->
+
+    <!-- 可选项 -->
+    <!--<source></source>-->
+
+    <!-- 可选项 设置 time 字段呈现的格式 -->
+    <timeFormat>yyyy-MM-dd HH:mm:ss</timeFormat>
+    <!-- 可选项 设置 time 字段呈现的时区 -->
+    <timeZone>Asia/Shanghai</timeZone>
+  </appender>
+
+  <!-- 控制台输出日志级别 -->
+  <root level="info">
+    <!--        <appender-ref ref="GELF"/>-->
+    <appender-ref ref="STDOUT"/>
+    <appender-ref ref="cls"/>
+    <!--        <appender-ref ref="DEBUG_FILE" />-->
+    <!--        <appender-ref ref="ERROR_FILE" />-->
+  </root>
+</configuration>
