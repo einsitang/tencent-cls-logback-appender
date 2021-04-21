@@ -81,13 +81,13 @@ throwable: java.lang.RuntimeException: com.netflix.client.ClientException: Load 
   <!--为了防止进程退出时，内存中的数据丢失，请加上此选项-->
   <shutdownHook class="ch.qos.logback.core.hook.DelayingShutdownHook"/>
 
-  <appender name="cls" class="com.sevlow.cls.logback.LoghubAppender">
+  <appender name="CLS" class="com.sevlow.cls.logback.LoghubAppender">
     <!--必选项-->
     <!-- 账号及网络配置 -->
     <region>ap-guangzhou</region>
     <secretId>SECRET ID</secretId>
     <secretKey>SECRET KEY</secretKey>
-    <topicId>CLS TOPIC</topicId>
+    <topicId>CLS TOPIC ID</topicId>
     <!--必选项 (end)-->
 
     <!-- 可选项 -->
@@ -102,7 +102,7 @@ throwable: java.lang.RuntimeException: com.netflix.client.ClientException: Load 
   <!-- 控制台输出日志级别 -->
   <root level="info">
     <appender-ref ref="STDOUT"/>
-    <appender-ref ref="cls"/>
+    <appender-ref ref="CLS"/>
   </root>
 </configuration>
 ```
