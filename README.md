@@ -47,9 +47,9 @@ throwable:java.lang.RuntimeException: com.netflix.client.ClientException: Load b
 * ok-http 2.5.0
 
 
-## 配置
+## 使用
 
-###  maven 工程依赖引入
+###  1. maven 工程依赖引入
 
 ```
 <dependency>
@@ -116,3 +116,20 @@ throwable:java.lang.RuntimeException: com.netflix.client.ClientException: Load b
 + `<timeFormat>` 设置日期格式,默认: `yyyy-MM-dd HH:mm:ss`
 + `<timeZone>` 设置时区 ,默认 : `UTC`,中国时区可以填入`Asia/Shanghai`
 + `<sendInterval>` 上报周期,默认为1,单位为秒,表示每秒至少上报一次日志,可是范围为1~5秒
+
+## 编译打包
+
+### 编译
+`mvn clean compile`
+
+### 本地安装
+`mvn install`
+
+> 如果你当前的开发环境基于 `Apple Silicon` 架构
+> 在编译时请使用x86_64程序编译`protobuf`文件,只需要附加参数：
+>
+>  -Dos.detected.name=osx -Dos.detected.arch=x86_64 -Dos.detected.classifier=osx-x86_64 
+>
+> 编译完整命令:
+>
+> mvn clean compile  -Dos.detected.name=osx -Dos.detected.arch=x86_64 -Dos.detected.classifier=osx-x86_64 
