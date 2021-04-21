@@ -5,7 +5,7 @@
 
   <groupId>com.sevlow.logback</groupId>
   <artifactId>tencent-cls-logback-appender</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.0</version>
   <packaging>jar</packaging>
 
   <name>tencent cls logback appender</name>
@@ -27,6 +27,16 @@
     </developer>
 
   </developers>
+  <scm>
+    <connection>
+      scm:git:https://github.com/forfuns/tencent-cls-logback-appender
+    </connection>
+    <developerConnection>
+      scm:git:https://github.com/forfuns/tencent-cls-logback-appender
+    </developerConnection>
+    <url>https://github.com/forfuns/tencent-cls-logback-appender</url>
+    <tag>v1.0.0</tag>
+  </scm>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
