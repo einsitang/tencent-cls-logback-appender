@@ -35,3 +35,4 @@ LogbackAppenderPackageIDCase*.java
 # release files
 release.properties
 pom.xml.releaseBackup
+/src/test/resources/logback-test.xml
