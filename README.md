@@ -18,7 +18,7 @@
 datetime: 2021-04-21 18:33:40
 hostname: EinsiTangdeMacBook-ProM1.local
 formattedMessage: Shutting down the Executor Pool for PollingServerListUpdater
-level: INFO
+level: ERROR
 ip: 10.7.1.227
 time: 1619001220095
 loggerName: com.netflix.loadbalancer.PollingServerListUpdater(53)
