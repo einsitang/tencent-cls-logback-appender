@@ -54,8 +54,11 @@ public class LoghubAppender<E> extends UnsynchronizedAppenderBase<E> {
   // 发送任务重试最大重试 3 次
   private static int MAX_SEND_RETRIES = 3;
 
-  //单次发送任务数据包（logs）上限 1w 条
-  private static int MAX_SEND_PACK_LOGS = 10_000;
+  //单次发送任务数据包（logs）最低 3000 条
+  private static int MIN_SEND_PACK_LOGS = 3_000;
+
+  //单次发送任务数据包（logs）最高 8000 条
+  private static int MAX_SEND_PACK_LOGS = 8_000;
 
   // 最大缓存数据包 2w 条
   private static int MAX_CACHE_PACK_LOGS = 20_000;
@@ -84,6 +87,7 @@ public class LoghubAppender<E> extends UnsynchronizedAppenderBase<E> {
   private String ip;
 
   private int sendInterval = MIN_SEND_INTERVAL;
+  private int sendPackLogs = MIN_SEND_PACK_LOGS;
 
   protected String timeZone = "UTC";
   protected String timeFormat = "yyyy-MM-dd'T'HH:mmZ";
@@ -213,7 +217,7 @@ public class LoghubAppender<E> extends UnsynchronizedAppenderBase<E> {
 
     logItemList.add(logItem);
 
-    if (GLOBAL_COUNTER.intValue() >= MAX_SEND_PACK_LOGS) {
+    if (GLOBAL_COUNTER.intValue() >= sendPackLogs) {
       send();
     }
   }
@@ -271,11 +275,12 @@ public class LoghubAppender<E> extends UnsynchronizedAppenderBase<E> {
       logGroupBuilder.addLogs(logBuilder.build());
 
       count++;
-      if (count >= MAX_SEND_PACK_LOGS) {
+      if (count >= sendPackLogs) {
         break;
       }
     }
 
+//    System.out.println("发送条数:".concat(String.valueOf(count)));
     GLOBAL_COUNTER.add(-count);
     try {
       producer.lz4Upload(this.topicId, LogGroupList.newBuilder()
@@ -333,5 +338,15 @@ public class LoghubAppender<E> extends UnsynchronizedAppenderBase<E> {
     }
 
     this.sendInterval = sendInterval;
+  }
+
+  public void setSendPackLogs(int sendPackLogs) {
+    if (sendPackLogs > MAX_SEND_PACK_LOGS) {
+      sendPackLogs = MAX_SEND_PACK_LOGS;
+    }
+    if (sendPackLogs < MIN_SEND_PACK_LOGS) {
+      sendPackLogs = MIN_SEND_PACK_LOGS;
+    }
+    this.sendPackLogs = sendPackLogs;
   }
 }

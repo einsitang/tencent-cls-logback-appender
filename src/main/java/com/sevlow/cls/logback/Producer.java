@@ -157,6 +157,7 @@ public class Producer {
 //        log.info("failure send log");
 //        log.info(e.getMessage(), e);
 //        debugQueueInfo();
+//        System.out.println("failure send log : ".concat(e.getMessage()));
         if (e instanceof UnknownHostException) {
           // unknown hosts , retry
           // timeout , retry
@@ -175,6 +176,8 @@ public class Producer {
 //        log.debug("upload response -> http status code : {}", response.code());
 //        log.debug("upload response -> body : {}", body);
 //        debugQueueInfo();
+//        System.out.println("status code -> ".concat(String.valueOf(response.code())));
+//        System.out.println("body -> ".concat(body));
       }
     });
 

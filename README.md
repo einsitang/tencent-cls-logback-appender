@@ -93,6 +93,10 @@ throwable: java.lang.RuntimeException: com.netflix.client.ClientException: Load 
     <!-- 可选项 -->
     <!--<source></source>-->
 
+    <!-- 发送频率,秒,[1-5] -->
+    <sendInterval>1</sendInterval>
+    <!-- 发送日志包条数 [3000-8000] -->
+    <sendPackLogs>3000</sendPackLogs>
     <!-- 可选项 设置 time 字段呈现的格式 -->
     <timeFormat>yyyy-MM-dd HH:mm:ss</timeFormat>
     <!-- 可选项 设置 time 字段呈现的时区 -->

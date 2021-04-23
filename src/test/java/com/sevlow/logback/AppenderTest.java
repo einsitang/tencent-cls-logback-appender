@@ -8,9 +8,9 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TestAppender {
+public class AppenderTest {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(TestAppender.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(AppenderTest.class);
 
   private static CountDownLatch latch;
 
