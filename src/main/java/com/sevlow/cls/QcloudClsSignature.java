@@ -125,30 +125,4 @@ public class QcloudClsSignature {
     return authoriationStr;
   }
 
-  public static void main(String args[]) {
-    Map<String, String> paramMap = new HashMap();
-    Map<String, String> headerMap = new HashMap();
-    paramMap.put("logset_id", "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx");
-    headerMap.put("Host", "ap-shanghai.cls.myqcloud.com");
-    headerMap.put("User-Agent", "AuthSDK");
-    try {
-      System.out.println(QcloudClsSignature.buildSignature("AKIDc9YlmrBcFk4C8sbmXQ8i65XXXXXXXXXX",
-          "LUSE4nPK1d4tX5SHyXv6tZXXXXXXXXXX",
-          "GET", "/logset", paramMap, headerMap, 300000));
-    } catch (UnsupportedEncodingException e) {
-      e.printStackTrace();
-    }
-
-    paramMap.clear();
-    headerMap.put("Content-Type", "application/json");
-    headerMap.put("Content-MD5", "f9c7fc33c7eab68dfa8a52508d1f4659");
-    try {
-      System.out.println(QcloudClsSignature.buildSignature("AKIDc9YlmrBcFk4C8sbmXQ8i65XXXXXXXXXX",
-          "LUSE4nPK1d4tX5SHyXv6tZXXXXXXXXXX",
-          "PUT", "/logset", paramMap, headerMap, 300000));
-    } catch (UnsupportedEncodingException e) {
-      e.printStackTrace();
-    }
-  }
-
 }
