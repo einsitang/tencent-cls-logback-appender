@@ -5,7 +5,7 @@
 
   <groupId>com.sevlow.logback</groupId>
   <artifactId>tencent-cls-logback-appender</artifactId>
-  <version>1.0.1</version>
+  <version>1.0.2</version>
   <packaging>jar</packaging>
 
   <name>tencent cls logback appender</name>
