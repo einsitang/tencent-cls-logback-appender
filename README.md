@@ -14,7 +14,7 @@
 
 已知问题：
 
-- 使用主动上报的方式无法使用 "**上下文检索**" , 需要等待腾讯云开放该功能 (`LogGroup.contextFlow`)
+- ~~使用主动上报的方式无法使用 "**上下文检索**" , 需要等待腾讯云开放该功能 (`LogGroup.contextFlow`)~~
 
 
 样例日志:
@@ -59,7 +59,7 @@ throwable: java.lang.RuntimeException: com.netflix.client.ClientException: Load 
 <dependency>
     <groupId>com.sevlow.logback</groupId>
     <artifactId>tencent-cls-logback-appender</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
 </dependency>
 ```
 

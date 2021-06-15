@@ -19,6 +19,7 @@ import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.Queue;
+import java.util.UUID;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadFactory;
@@ -49,7 +50,11 @@ import org.joda.time.format.DateTimeFormatter;
 @Data
 public class LoghubAppender<E> extends UnsynchronizedAppenderBase<E> {
 
+  private static String CONTEXT_FLOW_PREFIX = UUID.randomUUID().toString().replace("-", "");
+
   private static LongAdder GLOBAL_COUNTER = new LongAdder();
+
+  private static LongAdder CONTEXT_FLOW = new LongAdder();
 
   // 发送任务重试最大重试 3 次
   private static int MAX_SEND_RETRIES = 3;
@@ -247,8 +252,12 @@ public class LoghubAppender<E> extends UnsynchronizedAppenderBase<E> {
 //      log.debug("日志信息为空,跳过发送日志");
       return;
     }
+
+    CONTEXT_FLOW.increment();
     LogItem logItem = null;
     LogGroup.Builder logGroupBuilder = LogGroup.newBuilder();
+    logGroupBuilder
+        .setContextFlow(CONTEXT_FLOW_PREFIX.concat("-" + CONTEXT_FLOW.longValue()));
     while ((logItem = logItemList.poll()) != null) {
 
       Log.Builder logBuilder = Log.newBuilder();
