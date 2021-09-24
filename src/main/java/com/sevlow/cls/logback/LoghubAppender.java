@@ -12,6 +12,7 @@ import cls.Cls.LogGroup;
 import cls.Cls.LogGroupList;
 import com.google.common.collect.Queues;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import com.sevlow.cls.ConsoleLog;
 import com.sevlow.cls.config.ClsConfig;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -45,10 +46,13 @@ import org.joda.time.format.DateTimeFormatter;
  * 并发线程 3 条
  *
  * @param <E> EventObject
+ * @author einsitang
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class LoghubAppender<E> extends UnsynchronizedAppenderBase<E> {
+
+  private static final String CLASS_NAME = LoghubAppender.class.getName();
 
   private static String CONTEXT_FLOW_PREFIX = UUID.randomUUID().toString().replace("-", "");
 
@@ -87,6 +91,8 @@ public class LoghubAppender<E> extends UnsynchronizedAppenderBase<E> {
 
   private String mdcFields;
 
+  private String debug;
+  private String isInternal;
   private String source;
   private String hostname;
   private String ip;
@@ -100,8 +106,16 @@ public class LoghubAppender<E> extends UnsynchronizedAppenderBase<E> {
 
   private ScheduledExecutorService timerExecutor;
   private Producer producer;
+  private ConsoleLog consoleLog;
 
   private Queue<LogItem> logItemList = Queues.newConcurrentLinkedQueue();
+
+  private boolean isDebug() {
+    if (debug == null) {
+      return false;
+    }
+    return "TRUE".equalsIgnoreCase(debug);
+  }
 
   @Override
   public void start() {
@@ -115,6 +129,7 @@ public class LoghubAppender<E> extends UnsynchronizedAppenderBase<E> {
   private void doStart() {
 
     producer = createProducer();
+    consoleLog = createConsoleLog();
     formatter = DateTimeFormat.forPattern(timeFormat).withZone(DateTimeZone.forID(timeZone));
 
     if (null == source) {
@@ -128,6 +143,7 @@ public class LoghubAppender<E> extends UnsynchronizedAppenderBase<E> {
         new ThreadFactoryBuilder().setNameFormat("appender-timer-executor-thread-%d").build();
     timerExecutor = Executors.newScheduledThreadPool(CONCURRENT_THREAD_TASKS, namedThreadFactory);
     timerExecutor.scheduleAtFixedRate(() -> {
+      consoleLog.log("定时器启动 : " + new DateTime().toString(formatter));
 //      log.debug("定时器启动 {}", new DateTime().toString(formatter));
       try {
         send();
@@ -138,19 +154,25 @@ public class LoghubAppender<E> extends UnsynchronizedAppenderBase<E> {
     }, sendInterval, sendInterval, TimeUnit.SECONDS);
   }
 
-  public Producer createProducer() {
+  private ConsoleLog createConsoleLog() {
+    return new ConsoleLog(CLASS_NAME, isDebug());
+  }
+
+  private Producer createProducer() {
     ClsConfig config = new ClsConfig();
     config.setRegion(region);
     config.setSecretId(secretId);
     config.setSecretKey(secretKey);
     config.setRetries(MAX_SEND_RETRIES);
+    config.setInternal("TRUE".equalsIgnoreCase(isInternal));
+    config.setDebug(isDebug());
     return new Producer(config);
   }
 
   @Override
   public void stop() {
     super.stop();
-//    log.debug("appender timer executor 停止...");
+    consoleLog.log("appender timer executor 停止...");
     if (timerExecutor != null && !timerExecutor.isShutdown()) {
       timerExecutor.shutdown();
     }

@@ -59,7 +59,7 @@ throwable: java.lang.RuntimeException: com.netflix.client.ClientException: Load 
 <dependency>
     <groupId>com.sevlow.logback</groupId>
     <artifactId>tencent-cls-logback-appender</artifactId>
-    <version>1.0.3</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 
@@ -95,7 +95,10 @@ throwable: java.lang.RuntimeException: com.netflix.client.ClientException: Load 
     <!--必选项 (end)-->
 
     <!-- 可选项 -->
-    <!--<source></source>-->
+    <!-- 是否腾讯云内部上报:如果在外网则务必设置为false,默认false -->
+    <isInternal>false</isInternal>
+    <!-- 是否打开调试输出 -->
+    <debug>false</debug>
 
     <!-- 发送频率,秒,[1-5] -->
     <sendInterval>1</sendInterval>

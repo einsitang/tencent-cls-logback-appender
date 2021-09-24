@@ -2,16 +2,26 @@ package com.sevlow.cls.config;
 
 import lombok.Data;
 
+/**
+ * @author einsitang
+ */
 @Data
 public class ClsConfig {
 
-  private static final String HOST_URL_TEMPLATE = "%s.cls.myqcloud.com";
+  private static final String INTERNAL_HOST_URL_TEMPLATE = "%s.cls.tencentyun.com";
+
+  private static final String EXTERNAL_HOST_URL_TEMPLATE = "%s.cls.tencentcs.com";
 
   private String secretId;
 
   private String secretKey;
 
   private String region;
+
+  /**
+   * 是否腾讯云内部使用
+   */
+  private boolean isInternal = false;
 
   private int retries = 3;
 
@@ -26,7 +36,8 @@ public class ClsConfig {
   }
 
   public String getHost() {
-    return String.format(HOST_URL_TEMPLATE, this.region);
+    String hostUrlTemplate = isInternal ? INTERNAL_HOST_URL_TEMPLATE : EXTERNAL_HOST_URL_TEMPLATE;
+    return String.format(hostUrlTemplate, this.region);
   }
 
   public enum REGION {
@@ -124,7 +135,7 @@ public class ClsConfig {
     /**
      * name of region
      */
-    private String name;
+    private final String name;
 
     private REGION(String name) {
       this.name = name;

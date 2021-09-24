@@ -2,6 +2,7 @@ package com.sevlow.cls.logback;
 
 import cls.Cls.LogGroupList;
 import com.google.common.collect.Maps;
+import com.sevlow.cls.ConsoleLog;
 import com.sevlow.cls.QcloudClsSignature;
 import com.sevlow.cls.config.ClsConfig;
 import com.squareup.okhttp.Callback;
@@ -33,9 +34,14 @@ import net.jpountz.lz4.LZ4BlockOutputStream;
 import net.jpountz.lz4.LZ4Compressor;
 import net.jpountz.lz4.LZ4Factory;
 
+/**
+ * @author einsitang
+ */
 public class Producer {
 
-  private final static String API_UPLOAD = "/structuredlog";
+  private static final String CLASS_NAME = Producer.class.getName();
+
+  private static final String API_UPLOAD = "/structuredlog";
 
   private static final OkHttpClient HTTP_CLIENT = new OkHttpClient();
 
@@ -43,10 +49,13 @@ public class Producer {
 
   private final ClsConfig config;
 
+  private final ConsoleLog consoleLog;
+
   private static boolean IS_INITIALIZED = false;
 
   public Producer(ClsConfig config) {
     this.config = config;
+    this.consoleLog = new ConsoleLog(CLASS_NAME, config.isDebug());
     trySSlDisable();
   }
 
@@ -157,13 +166,13 @@ public class Producer {
 //        log.info("failure send log");
 //        log.info(e.getMessage(), e);
 //        debugQueueInfo();
-//        System.out.println("failure send log : ".concat(e.getMessage()));
+        consoleLog.log("failure send log : ".concat(e.getMessage()));
         if (e instanceof UnknownHostException) {
           // unknown hosts , retry
           // timeout , retry
           this.execCount++;
           if (execCount <= Producer.this.config.getRetries()) {
-//            log.debug("正在重试 : {} / {}", this.execCount, Producer.this.config.getRetries());
+            consoleLog.log("正在重试 : " + this.execCount + " / " + Producer.this.config.getRetries());
             HTTP_CLIENT.newCall(request).enqueue(this);
           }
         }
@@ -172,12 +181,12 @@ public class Producer {
 
       @Override
       public void onResponse(Response response) throws IOException {
-//        String body = response.body().string();
+        String body = response.body().string();
 //        log.debug("upload response -> http status code : {}", response.code());
 //        log.debug("upload response -> body : {}", body);
 //        debugQueueInfo();
-//        System.out.println("status code -> ".concat(String.valueOf(response.code())));
-//        System.out.println("body -> ".concat(body));
+        consoleLog.log("status code -> ".concat(String.valueOf(response.code())));
+        consoleLog.log("body -> ".concat(body));
       }
     });
 

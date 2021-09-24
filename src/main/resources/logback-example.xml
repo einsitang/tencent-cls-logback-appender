@@ -25,6 +25,10 @@
     <!--必选项 (end)-->
 
     <!-- 可选项 -->
+    <!-- 是否腾讯云内部上报:如果在外网则务必设置为false,默认false -->
+    <isInternal>false</isInternal>
+    <!-- 是否打开调试输出 -->
+    <debug>false</debug>
     <!--<source></source>-->
 
     <!-- 发送频率,秒,[1-5] -->
