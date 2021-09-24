@@ -127,6 +127,8 @@ throwable: java.lang.RuntimeException: com.netflix.client.ClientException: Load 
 + `<timeFormat>` 设置日期格式,默认: `yyyy-MM-dd HH:mm:ss`
 + `<timeZone>` 设置时区 ,默认 : `UTC`,中国时区可以填入`Asia/Shanghai`
 + `<sendInterval>` 上报周期,默认为1,单位为秒,表示每秒至少上报一次日志,可是范围为1~5秒
++ `<isInternal>` 是否腾讯云内部上报:如果在**外网则务必设置为false**,默认false
++ `<debug>` 是否打开调试输出
 
 ## 编译打包
 
