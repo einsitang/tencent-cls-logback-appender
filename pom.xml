@@ -35,7 +35,7 @@
       scm:git:https://github.com/forfuns/tencent-cls-logback-appender
     </developerConnection>
     <url>https://github.com/forfuns/tencent-cls-logback-appender</url>
-    <tag>v1.1.0</tag>
+    <tag>v1.2.0-SNAPSHOT</tag>
   </scm>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

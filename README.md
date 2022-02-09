@@ -48,7 +48,7 @@ throwable: java.lang.RuntimeException: com.netflix.client.ClientException: Load 
 * logback 1.2.3
 * protobuf 3.13.0
 * grpc-java 1.34.0
-* ok-http 2.5.0
+* ok-http 2.7.4
 
 
 ## 使用
