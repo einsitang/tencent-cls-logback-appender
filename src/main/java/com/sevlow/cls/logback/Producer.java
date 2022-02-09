@@ -107,6 +107,7 @@ public class Producer {
    * @param uri                api uri
    * @param formatedParameters 请求参数
    * @param formatedHeaders    请求头
+   * @throws UnsupportedEncodingException java.io.UnsupportedEncodingException
    * @return 包含签名的授权信息 "Authorization"
    */
   public String sign(@NonNull String method, @NonNull String uri,
