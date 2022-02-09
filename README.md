@@ -59,8 +59,8 @@ throwable: java.lang.RuntimeException: com.netflix.client.ClientException: Load 
 <dependency>
     <groupId>com.sevlow.logback</groupId>
     <artifactId>tencent-cls-logback-appender</artifactId>
-    <version>1.1.0</version>
-    <!-- <version>1.2.0-SNAPSHOT</version> -->
+    <!-- <version>1.1.0</version> -->
+    <version>1.2.0-SNAPSHOT</version>
 </dependency>
 ```
 
